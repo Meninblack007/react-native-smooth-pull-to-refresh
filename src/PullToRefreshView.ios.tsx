@@ -80,7 +80,7 @@ export const PullToRefreshView: ComponentClass<PullToRefreshProps> = compose<Bas
           onRefresh();
         }
       },
-      onScrollEvent: ({isScrollFree, onScroll, scrollY, minPullDistance, onTriggerToRefresh, shouldTriggerRefresh, setShouldTriggerRefresh}) => (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      onScrollEvent: ({isScrollFree, onScroll, scrollY, minPullDistance, onTriggerToRefresh, shouldTriggerRefresh, setShouldTriggerRefresh, isRefreshing}) => (event: NativeSyntheticEvent<NativeScrollEvent>) => {
         onScroll && onScroll(event);
         scrollY.setValue(event.nativeEvent.contentOffset.y);
         if (!isScrollFree) {
@@ -89,7 +89,7 @@ export const PullToRefreshView: ComponentClass<PullToRefreshProps> = compose<Bas
         if (event.nativeEvent.contentOffset.y <= -minPullDistance) {
           onTriggerToRefresh && onTriggerToRefresh(true);
           setShouldTriggerRefresh(true);
-        } else if (shouldTriggerRefresh) {
+        } else if (!isRefreshing && shouldTriggerRefresh) {
           onTriggerToRefresh && onTriggerToRefresh(false);
           setShouldTriggerRefresh(false);
         }

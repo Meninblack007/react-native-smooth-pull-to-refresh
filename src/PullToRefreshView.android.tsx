@@ -88,7 +88,7 @@ export const PullToRefreshView: ComponentClass<PullToRefreshProps> = compose<Bas
         layoutScrollHeight = event.nativeEvent.layout.height;
         setMinHeight(layoutScrollHeight + refreshHeight);
       },
-      onScrollEvent: ({onScroll, minPullDistance, refreshHeight, setMinHeight, setRefreshHeight, scrollY, shouldTriggerRefresh, onTriggerToRefresh, setShouldTriggerRefresh}) => (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      onScrollEvent: ({onScroll, minPullDistance, refreshHeight, setMinHeight, setRefreshHeight, scrollY, shouldTriggerRefresh, onTriggerToRefresh, setShouldTriggerRefresh, isRefreshing}) => (event: NativeSyntheticEvent<NativeScrollEvent>) => {
         if (refreshHeight === 1 && event.nativeEvent.velocity.y < 0) {
           const minHeight = layoutScrollHeight + minPullDistance;
           setMinHeight(minHeight);
@@ -103,7 +103,7 @@ export const PullToRefreshView: ComponentClass<PullToRefreshProps> = compose<Bas
               onTriggerToRefresh && onTriggerToRefresh(true);
               setShouldTriggerRefresh(true);
             }
-          } else if (shouldTriggerRefresh) {
+          } else if (!isRefreshing && shouldTriggerRefresh) {
             onTriggerToRefresh && onTriggerToRefresh(false);
             setShouldTriggerRefresh(false);
           }
