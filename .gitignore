@@ -55,7 +55,6 @@ fastlane/
 
 # VSCode
 jsconfig.json
-dist
 .vscode
 
 # Jest
